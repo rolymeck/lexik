@@ -10,3 +10,6 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+upload:
+  path: "/Users/KhrebtovD/Desktop/uploads"
