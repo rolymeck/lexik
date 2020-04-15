@@ -31,7 +31,10 @@
     <a class="button is-link">Link</a>
 </div>
 <hr>
-<@acc.logoutButton/>
+<div>
+    <@acc.logoutButton/>
+    <a href="/u">Users</a>
+</div>
 <form action="/main" method="post">
     <input type="text" name="text" placeholder="Введите сообщение">
     <input type="text" name="tag" placeholder="Тэг">
