@@ -1,3 +1,12 @@
 spring:
   freemarker:
     prefix: "view/"
+    expose-request-attributes: true
+  datasource:
+    url: jdbc:postgresql://localhost/lexik
+    username: lexik
+    password: password
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update

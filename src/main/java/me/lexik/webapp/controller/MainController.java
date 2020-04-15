@@ -1,18 +1,53 @@
 package me.lexik.webapp.controller;
 
+import me.lexik.webapp.domain.Message;
+import me.lexik.webapp.repository.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
 public class MainController {
+    @Autowired
+    private MessageRepository messageRepository;
 
-    @RequestMapping
-    public String main(@RequestParam(required = false, defaultValue = "GOD") String name,
-                       Map<String, Object> model) {
-        model.put("name", name);
-        return "index";
+    @GetMapping
+    public String home(Map<String, Object> model) {
+        return "home";
+    }
+
+    @GetMapping("main")
+    public String main(Map<String, Object> model) {
+        Iterable<Message> messages = messageRepository.findAll();
+        model.put("messages", messages);
+        return "main";
+    }
+
+    @PostMapping("main")
+    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
+        Message message = new Message(text, tag);
+        messageRepository.save(message);
+
+        Iterable<Message> messages = messageRepository.findAll();
+        model.put("messages", messages);
+        return "main";
+    }
+
+    @PostMapping("main/filter")
+    public String filter(@RequestParam String filter, Map<String, Object> model) {
+        Iterable<Message> messages;
+
+        if (filter != null && !filter.isEmpty()) {
+            messages = messageRepository.findByTag(filter);
+        } else {
+            messages = messageRepository.findAll();
+        }
+
+        model.put("messages", messages);
+        return "main";
     }
 }
