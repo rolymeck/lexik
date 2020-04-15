@@ -1,3 +1,5 @@
+<#import "fragment/account.ftlh" as acc>
+
 <!doctype html>
 <html>
 <head>
@@ -5,10 +7,6 @@
     <#include "fragment/head.ftlh">
 </head>
 <body>
-<form action="/logout" method="post">
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <input type="submit" value="Sign Out"/>
-</form>
 
 <h1 class="titile">Lexik.me</h1>
 <p class="subtitle">Бесплатный тренажер английской грамматики</p>
@@ -33,22 +31,25 @@
     <a class="button is-link">Link</a>
 </div>
 <hr>
-<form method="post">
+<@acc.logoutButton/>
+<form action="/main" method="post">
     <input type="text" name="text" placeholder="Введите сообщение">
     <input type="text" name="tag" placeholder="Тэг">
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <button type="submit">Добавить</button>
 </form>
 <div>Список сообщений</div>
-<form action="/main/filter" method="post">
-    <input type="text" name="filter">
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
+<form action="/main" method="get">
+    <input type="text" name="filter" value="${filter!}">
     <button type="submit">Найти</button>
 </form>
 <#list messages as message>
-    <b>${message.id}</b>
-    <span>${message.text}</span>
-    <i>${message.tag}</i>
+    <div>
+        <b>${message.id}</b>
+        <span>${message.text}</span>
+        <i>${message.tag}</i>
+        <strong>${message.authorName}</strong>
+    </div>
 </#list>
 
 </body>
