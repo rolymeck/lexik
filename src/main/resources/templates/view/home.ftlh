@@ -1,11 +1,7 @@
-<!doctype html>
-<html>
-<head>
-    <title>Lexik.me</title>
-    <#include "fragment/head.ftlh">
-</head>
-<body>
-<div>Hello, user!</div>
-<a href="/main">Main</a>
-</body>
-</html>
+<#import "fragment/common.ftlh" as c>
+
+<@c.page "Lexik.me">
+    <div>Hello, user!</div>
+    <a href="/main">Main</a>
+</@c.page>
+

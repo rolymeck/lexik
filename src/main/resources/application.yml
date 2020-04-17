@@ -7,6 +7,7 @@ spring:
     username: lexik
     password: password
   jpa:
+    show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: update
