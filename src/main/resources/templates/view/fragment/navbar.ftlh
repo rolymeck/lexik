@@ -21,6 +21,12 @@
                     <a class="nav-link" href="/u">Users</a>
                 </li>
             </#if>
+            <#if isAuth>
+                <li class="nav-item">
+                    <a class="nav-link" href="/u/profile">Profile</a>
+                </li>
+            </#if>
+
         </ul>
         <#if isAuth>
             <div class="navbar-text mr-3">${name}</div>

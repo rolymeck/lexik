@@ -8,9 +8,9 @@ spring:
     password: password
   jpa:
     show-sql: true
-    generate-ddl: true
+    generate-ddl: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   mail:
     host: smtp.yandex.ru
     username: activation@lexik.me
