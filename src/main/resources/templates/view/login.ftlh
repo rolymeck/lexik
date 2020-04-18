@@ -8,6 +8,9 @@
                     <div class="shadow border-top border-secondary">
                         <div class="card-body">
                             <h1 class="h3 mb-1 mt-2 text-center">Вход</h1>
+                            <#if message??>
+                                <div>${message}</div>
+                            </#if>
                             <form action="/login" method="post">
 
                                 <input type="text" class="form-control my-3" name="username"
@@ -17,6 +20,7 @@
                                        placeholder="password">
 
                                 <input type="hidden" name="_csrf" value="${_csrf.token}">
+
                                 <button type="submit" class="btn btn-primary btn-block">Войти</button>
                             </form>
                         </div>

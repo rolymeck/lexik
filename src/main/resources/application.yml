@@ -1,6 +1,6 @@
 spring:
   freemarker:
-    prefix: "view/"
+    prefix: view/
     expose-request-attributes: true
   datasource:
     url: jdbc:postgresql://localhost/lexik
@@ -11,6 +11,15 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.yandex.ru
+    username: activation@lexik.me
+    password: "!12345678"
+    port: 465
+    protocol: smtps
 
 upload:
-  path: "/Users/KhrebtovD/Desktop/uploads"
+  path: /Users/KhrebtovD/Desktop/uploads
+
+mail:
+  debug: true

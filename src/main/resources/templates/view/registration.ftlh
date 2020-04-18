@@ -16,6 +16,9 @@
                                 <input type="text" class="form-control my-3" name="username"
                                        placeholder="username">
 
+                                <input type="email" class="form-control my-3" name="email"
+                                       placeholder="email">
+
                                 <input type="password" class="form-control my-3" name="password"
                                        placeholder="password">
 
