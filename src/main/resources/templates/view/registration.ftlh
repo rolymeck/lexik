@@ -8,19 +8,59 @@
                     <div class="shadow border-top border-secondary">
                         <div class="card-body">
                             <h1 class="h3 mb-1 mt-2 text-center">Регистрация</h1>
-                            <#if message??>
-                                <div>${message}</div>
+                            <#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
+                                <div class="alert alert-danger" role="alert">
+                                    ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+                                </div>
                             </#if>
                             <form action="/registration" method="post">
+                                <div class="my-3">
+                                    <input type="text"
+                                           class="form-control ${(usernameError??)?string('is-invalid', '')}"
+                                           value="<#if user??>${user.username}</#if>" name="username"
+                                           placeholder="Имя пользователя">
+                                    <#if usernameError??>
+                                        <div class="invalid-feedback">
+                                            ${usernameError}
+                                        </div>
+                                    </#if>
+                                </div>
 
-                                <input type="text" class="form-control my-3" name="username"
-                                       placeholder="username">
+                                <div class="my-3">
+                                    <input type="email"
+                                           class="form-control ${(emailError??)?string('is-invalid', '')}"
+                                           value="<#if user??>${user.email}</#if>" name="email"
+                                           placeholder="Электронная почта">
+                                    <#if emailError??>
+                                        <div class="invalid-feedback">
+                                            ${emailError}
+                                        </div>
+                                    </#if>
+                                </div>
 
-                                <input type="email" class="form-control my-3" name="email"
-                                       placeholder="email">
+                                <div class="my-3">
+                                    <input type="password"
+                                           class="form-control ${(passwordError??)?string('is-invalid', '')}"
+                                           name="password"
+                                           placeholder="Пароль">
+                                    <#if passwordError??>
+                                        <div class="invalid-feedback">
+                                            ${passwordError}
+                                        </div>
+                                    </#if>
+                                </div>
 
-                                <input type="password" class="form-control my-3" name="password"
-                                       placeholder="password">
+                                <div class="my-3">
+                                    <input type="password"
+                                           class="form-control ${(passwordConfirmationError??)?string('is-invalid', '')}"
+                                           name="passwordConfirmation"
+                                           placeholder="Подтверждение пароля">
+                                    <#if passwordConfirmationError??>
+                                        <div class="invalid-feedback">
+                                            ${passwordConfirmationError}
+                                        </div>
+                                    </#if>
+                                </div>
 
                                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                                 <button type="submit" class="btn btn-primary btn-block">Создать аккаунт</button>

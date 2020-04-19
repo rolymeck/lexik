@@ -4,6 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -15,12 +17,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotBlank(message = "Имя пользователя не должно быть пустым")
     @Column(unique = true, length = 32)
     private String username;
 
+    @Email(message = "Введенный email должен быть корректным")
+    @NotBlank(message = "Email не должен быть пустым")
     @Column(unique = true, nullable = true, length = 128)
     private String email;
 
+    @NotBlank(message = "Пароль не должен быть пустым")
     @Column(nullable = false)
     private String password;
 

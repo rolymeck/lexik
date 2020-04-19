@@ -8,16 +8,41 @@
                     <div class="shadow border-top border-secondary">
                         <div class="card-body">
                             <h1 class="h3 mb-1 mt-2 text-center">Вход</h1>
+                            <#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
+                                <div class="alert alert-danger" role="alert">
+                                    ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+                                </div>
+                            </#if>
                             <#if message??>
-                                <div>${message}</div>
+                                <div class="alert alert-${messageType}" role="alert">
+                                    ${message}
+                                </div>
                             </#if>
                             <form action="/login" method="post">
 
-                                <input type="text" class="form-control my-3" name="username"
-                                       placeholder="username">
+                                <div class="my-3">
+                                    <input type="text"
+                                           class="form-control ${(usernameError??)?string('is-invalid', '')}"
+                                           value="<#if user??>${user.username}</#if>" name="username"
+                                           placeholder="Имя пользователя">
+                                    <#if usernameError??>
+                                        <div class="invalid-feedback">
+                                            ${usernameError}
+                                        </div>
+                                    </#if>
+                                </div>
 
-                                <input type="password" class="form-control my-3" name="password"
-                                       placeholder="password">
+                                <div class="my-3">
+                                    <input type="password"
+                                           class="form-control ${(passwordError??)?string('is-invalid', '')}"
+                                           name="password"
+                                           placeholder="Пароль">
+                                    <#if passwordError??>
+                                        <div class="invalid-feedback">
+                                            ${passwordError}
+                                        </div>
+                                    </#if>
+                                </div>
 
                                 <input type="hidden" name="_csrf" value="${_csrf.token}">
 

@@ -1,6 +1,9 @@
 package me.lexik.webapp.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "message")
@@ -9,7 +12,11 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @NotBlank(message = "Сообщение не должно быть пустым")
+    @Length(max = 2048, message = "Длина сообщения не должна превышать 2048 символов!")
     private String text;
+    @Length(max = 255, message = "Длина тэга не должна превышать 255 символов!")
     private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)

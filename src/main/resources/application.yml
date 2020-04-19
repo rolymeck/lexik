@@ -17,9 +17,14 @@ spring:
     password: "!12345678"
     port: 465
     protocol: smtps
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
 
 upload:
   path: /Users/KhrebtovD/Desktop/uploads
 
 mail:
   debug: true
+
