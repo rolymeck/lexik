@@ -16,20 +16,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
             </li>
+            <#if isAuth>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-messages/${user.id}">My messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/u/profile">Profile</a>
+                </li>
+            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/u">Users</a>
                 </li>
             </#if>
-            <#if isAuth>
-                <li class="nav-item">
-                    <a class="nav-link" href="/u/profile">Profile</a>
-                </li>
-            </#if>
+
 
         </ul>
         <#if isAuth>
-            <div class="navbar-text mr-3">${name}</div>
+            <div class="navbar-text mr-3">${user.username}</div>
             <form action="/logout" method="post">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <button class="btn btn-outline-primary" type="submit">Sign Out</button>
