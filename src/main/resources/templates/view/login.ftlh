@@ -24,7 +24,7 @@
                                     <input type="text"
                                            class="form-control ${(usernameError??)?string('is-invalid', '')}"
                                            value="<#if user??>${user.username}</#if>" name="username"
-                                           placeholder="Имя пользователя">
+                                           placeholder="Имя пользователя"/>
                                     <#if usernameError??>
                                         <div class="invalid-feedback">
                                             ${usernameError}
@@ -36,7 +36,7 @@
                                     <input type="password"
                                            class="form-control ${(passwordError??)?string('is-invalid', '')}"
                                            name="password"
-                                           placeholder="Пароль">
+                                           placeholder="Пароль"/>
                                     <#if passwordError??>
                                         <div class="invalid-feedback">
                                             ${passwordError}
@@ -44,14 +44,14 @@
                                     </#if>
                                 </div>
 
-                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 
                                 <button type="submit" class="btn btn-primary btn-block">Войти</button>
                             </form>
                         </div>
                         <div class="card-footer text-muted">
                             Нет аккаунта?
-                            <span class="font-weight-bolder ">
+                            <span class="font-weight-bolder">
                                 <a href="/registration">Создать новый аккаунт</a>
                                 </span>
                         </div>

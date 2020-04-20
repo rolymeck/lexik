@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">
         <img src="/static/img/icon/icon@150.png" width="30" height="30" class="d-inline-block align-top"
-             alt="">
+             alt=""/>
         Lexik.me
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -35,7 +35,7 @@
         <#if isAuth>
             <div class="navbar-text mr-3">${user.username}</div>
             <form action="/logout" method="post">
-                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <button class="btn btn-outline-primary" type="submit">Sign Out</button>
             </form>
         </#if>

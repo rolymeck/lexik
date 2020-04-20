@@ -1,0 +1,30 @@
+spring:
+  freemarker:
+    prefix: view/
+    expose-request-attributes: true
+  datasource:
+    url: jdbc:postgresql://localhost/lexik-test
+    username: lexik
+    password: password
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+  mail:
+    host: smtp.yandex.ru
+    username: activation@lexik.me
+    password: "!12345678"
+    port: 465
+    protocol: smtps
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+
+upload:
+  path: /Users/KhrebtovD/Desktop/uploads
+
+mail:
+  debug: true
+

@@ -3,8 +3,6 @@ package me.lexik.webapp.service;
 import me.lexik.webapp.domain.Role;
 import me.lexik.webapp.domain.User;
 import me.lexik.webapp.repository.UserRepository;
-import org.apache.catalina.Session;
-import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -125,5 +123,17 @@ public class UserService implements UserDetailsService {
             );
             mailSender.send(user.getEmail(), "Activation Code", message);
         }
+    }
+
+    public void subscribe(User currentUser, User user) {
+        user.getSubscribers().add(currentUser);
+
+        userRepository.save(user);
+    }
+
+    public void unsubscribe(User currentUser, User user) {
+        user.getSubscribers().remove(currentUser);
+
+        userRepository.save(user);
     }
 }

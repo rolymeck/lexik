@@ -10,7 +10,8 @@ import javax.validation.constraints.NotBlank;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_message")
+    @SequenceGenerator(name = "seq_message", sequenceName = "seq_message", allocationSize = 1)
     private Long id;
 
     @NotBlank(message = "Сообщение не должно быть пустым")

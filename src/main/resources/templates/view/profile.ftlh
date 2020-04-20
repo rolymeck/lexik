@@ -14,15 +14,15 @@
                             <form method="post">
 
                                 <input type="text" class="form-control my-3" name="username" value="${username}"
-                                       placeholder="username">
+                                       placeholder="username"/>
 
                                 <input type="email" class="form-control my-3" name="email" value="${email!''}"
-                                       placeholder="email">
+                                       placeholder="email"/>
 
                                 <input type="password" class="form-control my-3" name="password"
-                                       placeholder="password">
+                                       placeholder="password"/>
 
-                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 
                                 <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
                             </form>

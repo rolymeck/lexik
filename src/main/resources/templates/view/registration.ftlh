@@ -18,7 +18,7 @@
                                     <input type="text"
                                            class="form-control ${(usernameError??)?string('is-invalid', '')}"
                                            value="<#if user??>${user.username}</#if>" name="username"
-                                           placeholder="Имя пользователя">
+                                           placeholder="Имя пользователя"/>
                                     <#if usernameError??>
                                         <div class="invalid-feedback">
                                             ${usernameError}
@@ -30,7 +30,7 @@
                                     <input type="email"
                                            class="form-control ${(emailError??)?string('is-invalid', '')}"
                                            value="<#if user??>${user.email}</#if>" name="email"
-                                           placeholder="Электронная почта">
+                                           placeholder="Электронная почта"/>
                                     <#if emailError??>
                                         <div class="invalid-feedback">
                                             ${emailError}
@@ -42,7 +42,7 @@
                                     <input type="password"
                                            class="form-control ${(passwordError??)?string('is-invalid', '')}"
                                            name="password"
-                                           placeholder="Пароль">
+                                           placeholder="Пароль"/>
                                     <#if passwordError??>
                                         <div class="invalid-feedback">
                                             ${passwordError}
@@ -54,7 +54,7 @@
                                     <input type="password"
                                            class="form-control ${(passwordConfirmationError??)?string('is-invalid', '')}"
                                            name="passwordConfirmation"
-                                           placeholder="Подтверждение пароля">
+                                           placeholder="Подтверждение пароля"/>
                                     <#if passwordConfirmationError??>
                                         <div class="invalid-feedback">
                                             ${passwordConfirmationError}
@@ -62,7 +62,7 @@
                                     </#if>
                                 </div>
 
-                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                                 <button type="submit" class="btn btn-primary btn-block">Создать аккаунт</button>
                             </form>
                         </div>
