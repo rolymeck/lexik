@@ -5,8 +5,11 @@ import me.lexik.webapp.domain.User;
 import me.lexik.webapp.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -27,31 +30,38 @@ import java.util.UUID;
 
 @Controller
 public class MainController {
+
     @Value("${upload.path}")
     String uploadPath;
+
     @Autowired
     private MessageRepository messageRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public String home(Map<String, Object> model) {
         return "home";
     }
 
-    @GetMapping("main")
-    public String main(@RequestParam(required = false) String filter, Model model) {
-        Iterable<Message> messages;
+    @GetMapping("/main")
+    public String main(
+            @RequestParam(required = false) String filter,
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<Message> page;
 
         if (filter != null && !filter.isEmpty()) {
-            messages = messageRepository.findByTag(filter);
-            model.addAttribute("filter", filter);
+            page = messageRepository.findByTag(filter, pageable);
         } else {
-            messages = messageRepository.findAll();
+            page = messageRepository.findAll(pageable);
         }
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
+        model.addAttribute("filter", filter);
         return "main";
     }
 
-    @PostMapping("main")
+    @PostMapping("/main")
     public String add(@AuthenticationPrincipal User user,
                       @Valid Message message,
                       BindingResult bindingResult,
@@ -75,19 +85,6 @@ public class MainController {
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
         return "redirect:/main";
-    }
-
-    private void saveFile(@Valid Message message, @RequestParam("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            Path uploadDir = Path.of(uploadPath);
-            if (!Files.exists(uploadDir)) {
-                Files.createDirectory(uploadDir);
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(Path.of(uploadPath + "/" + resultFileName));
-            message.setFilename(resultFileName);
-        }
     }
 
     @GetMapping("user-messages/{user}")
@@ -120,20 +117,29 @@ public class MainController {
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         if (message.getAuthor().equals(currentUser)) {
-            if(!StringUtils.isEmpty(text)) {
+            if (!StringUtils.isEmpty(text)) {
                 message.setText(text);
             }
-
-            if(!StringUtils.isEmpty(tag)) {
+            if (!StringUtils.isEmpty(tag)) {
                 message.setTag(tag);
             }
-
             saveFile(message, file);
-
             messageRepository.save(message);
-
         }
 
         return "redirect:/user-messages/" + user;
+    }
+
+    private void saveFile(@Valid Message message, @RequestParam("file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            Path uploadDir = Path.of(uploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectory(uploadDir);
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(Path.of(uploadPath + "/" + resultFileName));
+            message.setFilename(resultFileName);
+        }
     }
 }

@@ -1,5 +1,5 @@
 insert into usr (id, username, password, active)
-values (1, 'admin', '111', true);
+values (nextval('seq_usr'), 'admin', '111', true);
 
 insert into user_role(user_id, roles)
 values (1, 'USER'),
