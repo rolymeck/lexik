@@ -1,3 +1,8 @@
 .navbar-brand {
     font-family: 'Raleway', sans-serif;
 }
+
+.turbolinks-progress-bar {
+    height: 5px;
+    background-color: black;
+}
