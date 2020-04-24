@@ -1,7 +1,12 @@
 spring:
   freemarker:
-    prefix: view/
+    enabled: false
+    prefix: fm/
     expose-request-attributes: true
+  thymeleaf:
+    cache: false
+    prefix: th/
+
   datasource:
     url: jdbc:postgresql://localhost/lexik
     username: lexik
