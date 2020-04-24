@@ -9,6 +9,8 @@
   </head>
 
   <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
     <main class="mt-5">
       <div class="row justify-content-center pb-5">
         <div class="col-12 col-sm-8 col-md-7 col-lg-4">
@@ -97,5 +99,6 @@
         </div>
       </div>
     </main>
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
   </body>
 </html>

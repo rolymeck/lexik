@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+
+  <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
+    <main class="container mt-5">
+      <h1>Пользователь [[${user.username}]]</h1>
+      <form action="/u" method="post">
+        <input type="text" name="id" th:value="${user.id}" readonly />
+        <input type="text" name="username" th:value="${user.username}" />
+
+        <label th:each="role : ${roles}">
+          <input
+            type="checkbox"
+            th:name="${role}"
+            th:checked="${#arrays.contains(user.roles, role)}"
+          />[[${role}]]
+        </label>
+
+        <input type="hidden" th:value="${_csrf.token}" name="_csrf" />
+        <button type="submit">Save</button>
+      </form>
+    </main>
+
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+
+  <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
+    <main class="mt-5">
+      <div class="row justify-content-center pb-5">
+        <div class="col-12 col-sm-8 col-md-7 col-lg-4">
+          <div class="mb-5">
+            <div class="shadow border-top border-secondary">
+              <div class="card-body">
+                <h1 class="h3 mb-1 mt-2 text-center" th:text="${username}"></h1>
+                <div th:if="${message}" th:text="${message}"></div>
+                <form method="post">
+                  <input
+                    type="text"
+                    class="form-control my-3"
+                    name="username"
+                    th:value="${username}"
+                    placeholder="username"
+                  />
+
+                  <input
+                    type="email"
+                    class="form-control my-3"
+                    name="email"
+                    th:value="${email}"
+                    placeholder="email"
+                  />
+
+                  <input
+                    type="password"
+                    class="form-control my-3"
+                    name="password"
+                    placeholder="password"
+                  />
+
+                  <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+                  <button type="submit" class="btn btn-primary btn-block">
+                    Сохранить
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
+  </body>
+</html>

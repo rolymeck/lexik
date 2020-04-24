@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+
+  <body>
+    <nav
+      th:fragment="nav"
+      class="navbar navbar-expand-lg navbar-light bg-light"
+    >
+      <a class="navbar-brand" href="/">
+        <img
+          src="/static/img/icon/icon@150.png"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt=""
+        />
+        Lexik.me
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/main">Messages</a>
+          </li>
+          <th:block sec:authorize="isAuthenticated()">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                th:href="@{/user-messages/{id}(id=${#session.getAttribute('SPRING_SECURITY_CONTEXT').authentication.principal.id})}"
+                >My messages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/u/profile">Profile</a>
+            </li>
+          </th:block>
+          <th:block sec:authorize="hasAuthority('ADMIN')">
+            <li class="nav-item">
+              <a class="nav-link" href="/u">Users</a>
+            </li>
+          </th:block>
+        </ul>
+        <th:block sec:authorize="isAuthenticated()">
+          <div
+            class="navbar-text mr-3"
+            th:text="${#session.getAttribute('SPRING_SECURITY_CONTEXT').authentication.principal.username}"
+          ></div>
+          <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+            <button class="btn btn-outline-primary" type="submit">
+              Sign Out
+            </button>
+          </form>
+        </th:block>
+      </div>
+    </nav>
+
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
+  </body>
+</html>

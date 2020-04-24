@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+
+  <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
+    <main class="container mt-5">
+      <h3>[[${userChannel.username}]]</h3>
+      <div>[[${type}]]</div>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="user : ${users}">
+          <a
+            th:href="/user-messages/{id}(id=${user.id})"
+            th:text="${user.getUsername()}"
+          ></a>
+        </li>
+      </ul>
+    </main>
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
+  </body>
+</html>

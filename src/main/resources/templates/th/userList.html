@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+
+  <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
+    <main class="container mt-5">
+      <h1>Список пользователей</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Cmd</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td>[[${user.username}]]</td>
+            <td>
+              [[${#strings.setJoin(user.roles,' , ')}]]
+            </td>
+            <td><a th:href="@{/u/{id}(id=${user.id})}">Edit</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
+  </body>
+</html>

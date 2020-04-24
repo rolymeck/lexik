@@ -8,6 +8,8 @@
     />
   </head>
   <body>
+    <nav th:replace="~{fragment/navbar.html :: nav}"></nav>
+
     <main class="container mt-5">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -23,10 +25,9 @@
           </form>
         </div>
       </div>
-
-      
-      <#include "fragment/messageEdit.ftlh"> 
-      <#include"fragment/messageList.ftlh">
+      <th:block th:insert="~{fragment/message.html :: editor}"> </th:block>
+      <th:block th:insert="~{fragment/message.html :: list}"> </th:block>
     </main>
+    <th:block th:insert="~{fragment/common :: bootstrap}" />
   </body>
 </html>

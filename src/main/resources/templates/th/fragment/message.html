@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragment/common :: head(_)}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+  <body>
+    <div th:fragment="editor">
+      <a
+        class="btn btn-primary"
+        data-toggle="collapse"
+        href="#newMessageForm"
+        role="button"
+        aria-expanded="false"
+        aria-controls="newMessageForm"
+      >
+        Редактор
+      </a>
+      <div
+        class="collapse"
+        th:classappend="${message} ? 'show'"
+        id="newMessageForm"
+      >
+        <div class="form-group mt-3">
+          <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${textError} ? 'is-invalid'"
+                th:value="${message} ? ${message.text}"
+                name="text"
+                placeholder="Сообщение"
+              />
+              <div
+                class="invalid-feedback"
+                th:if="${textError}"
+                th:text="${textError}"
+              ></div>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${tagError} ? 'is-invalid'"
+                th:value="${message} ? ${message.tag}"
+                name="tag"
+                placeholder="Тэг"
+              />
+              <div
+                class="invalid-feedback"
+                th:if="${tagError}"
+                th:text="${tagError}"
+              ></div>
+            </div>
+
+            <div class="form-group">
+              <div class="custom-file">
+                <input type="file" name="file" id="customFile" />
+                <label class="custom-file-label" for="customFile"
+                  >Прикрепить</label
+                >
+              </div>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <input
+              type="hidden"
+              name="id"
+              th:value="${message} ? ${message.id}"
+            />
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div th:fragment="list">
+      <th:block th:unless="${#lists.isEmpty(messages)}">
+        <div class="card-columns" id="message-list">
+          <div class="card my-3" th:each="message : ${messages}">
+            <img
+              th:src="@{/img/{filename}(filename=${message.filename})"
+              class="card-img-top"
+              th:if="${message.filename}"
+            />
+
+            <div class="m-2">
+              <span th:text="${message.text}"></span><br />
+              <i th:text="'#' + ${message.tag}">#</i>
+            </div>
+            <div class="card-footer text-muted">
+              <div class="row">
+                <a
+                  class="col align-self-center"
+                  th:href="@{/user-messages/{author}(author=${message.author.id})}"
+                  th:text="${message.authorName}"
+                  >author name</a
+                >
+                <a
+                  class="col align-self-center"
+                  th:href="@{/messages/{id}/like(id=${message.id})}"
+                >
+                  [[${message.likes}]]
+                  <i class="fas fa-heart" th:if="${message.meLiked}"></i>
+                  <i class="far fa-heart" th:unless="${message.meLiked}"></i>
+                </a>
+
+                <a
+                  class="col btn btn-primary"
+                  th:href="@{/user-messages/{author}(author=${message.author.id}, message=${message.id})}"
+                  th:if="${principalId == message.author.id}"
+                  >Изменить</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </th:block>
+      <th:block th:if="${#lists.isEmpty(messages)}">
+        <div>No messages</div>
+      </th:block>
+    </div>
+  </body>
+</html>

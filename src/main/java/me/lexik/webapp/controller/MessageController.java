@@ -22,10 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -43,7 +45,7 @@ public class MessageController {
     private MessageService messageService;
 
     @GetMapping("/")
-    public String home(Map<String, Object> model) {
+    public String home(Map<String, Object> model, HttpSession s) {
         return "home";
     }
 
@@ -51,14 +53,14 @@ public class MessageController {
     public String main(
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model,
-            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
             @AuthenticationPrincipal User user
     ) {
-        Page<MessageDto> page = messageService.messageList(pageable, filter, user);
+        List<MessageDto> messages = messageService.messageList(filter, user);
 
-        model.addAttribute("page", page);
+        model.addAttribute("messages", messages);
         model.addAttribute("url", "/main");
         model.addAttribute("filter", filter);
+        model.addAttribute("pricipalId", user.getId());
         return "main";
     }
 
@@ -94,14 +96,13 @@ public class MessageController {
             @AuthenticationPrincipal User currentUser,
             @PathVariable User author,
             Model model,
-            @RequestParam(required = false) Message message,
-            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+            @RequestParam(required = false) Message message
     ) {
-        Page<MessageDto> page = messageService.messageListForUser(pageable, currentUser, author);
+        List<MessageDto> messages = messageService.messageListForUser(currentUser, author);
 
         model.addAttribute("isCurrentUser", currentUser.equals(author));
         model.addAttribute("userChannel", author);
-        model.addAttribute("page", page);
+        model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isSubscriber", author.getSubscribers().contains(currentUser));
         model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
