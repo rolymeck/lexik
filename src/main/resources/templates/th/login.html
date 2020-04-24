@@ -17,11 +17,10 @@
                 <h1 class="h3 mb-1 mt-2 text-center">Вход</h1>
 
                 <div
-                  class="alert alert-danger"
+                  th:class="'alert alert-' + ${messageType}"
                   role="alert"
                   th:if="${message}"
                   th:text="${message}"
-                  th:attrappend="class=${' ' + messageType}"
                 ></div>
 
                 <form action="/login" method="post">
@@ -29,7 +28,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      th:attrappend="class=${usernameError} ? ' is-invalid' : ''"
+                      th:classappend="${usernameError} ? 'is-invalid'"
                       th:value="${user} ? ${user.username} : ''"
                       name="username"
                       placeholder="Имя пользователя"
@@ -45,7 +44,7 @@
                     <input
                       type="password"
                       class="form-control"
-                      th:attrappend="class=${passwordError} ? ' is-invalid' : ''"
+                      th:classappend="${passwordError} ? 'is-invalid'"
                       name="password"
                       placeholder="Пароль"
                     />

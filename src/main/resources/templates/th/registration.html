@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
   </head>
+
   <body>
     <main class="mt-5">
       <div class="row justify-content-center pb-5">
@@ -21,8 +22,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      th:attrappend="class=${usernameError} ? ' is-invalid' : ''"
-                      th:value="${user} ? ${user.username} : ''"
+                      th:classappend="${usernameError} ? 'is-invalid'"
+                      th:value="${user} ? ${user.username}"
                       name="username"
                       placeholder="Имя пользователя"
                     />
@@ -37,8 +38,8 @@
                     <input
                       type="email"
                       class="form-control"
-                      th:attrappend="class=${emailError} ? ' is-invalid' : ''"
-                      th:value="${user} ? ${user.email} : ''"
+                      th:classappend="${emailError} ? 'is-invalid'"
+                      th:value="${user} ? ${user.email}"
                       name="email"
                       placeholder="Электронная почта"
                     />
@@ -52,8 +53,8 @@
                   <div class="my-3">
                     <input
                       type="password"
-                      class="form-control"
-                      th:attrappend="class=${passwordError} ? ' is-invalid' : ''"
+                      th:class="form-control"
+                      th:classappend="${passwordError} ? 'is-invalid'"
                       name="password"
                       placeholder="Пароль"
                     />
@@ -68,7 +69,7 @@
                     <input
                       type="password"
                       class="form-control"
-                      th:attrappend="class=${passwordConfirmationError} ? ' is-invalid' : ''"
+                      th:classappend="${passwordConfirmationError} ? 'is-invalid'"
                       name="passwordConfirmation"
                       placeholder="Подтверждение пароля"
                     />
