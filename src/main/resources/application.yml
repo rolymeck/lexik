@@ -4,8 +4,9 @@ spring:
     prefix: fm/
     expose-request-attributes: true
   thymeleaf:
+    enabled: true
     cache: false
-    prefix: th/
+    prefix: classpath:/templates/th/
 
   datasource:
     url: jdbc:postgresql://localhost/lexik
@@ -32,4 +33,6 @@ upload:
 
 mail:
   debug: true
+
+debug: false
 
